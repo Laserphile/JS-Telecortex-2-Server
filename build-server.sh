@@ -10,7 +10,7 @@ build () {
   echo "Cleaning up..."
   cd node_modules && sudo find . -maxdepth 1  -type d -not -name 'pi-spi' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && cd ..
   sudo find . -maxdepth 1  -type d -not -name 'node_modules' -not -name 'built' -not -name '.git' -not -name '.' -exec rm -rdf {} +
-  sudo find . -maxdepth 1  -type f -not -name 'start.sh' -not -name 'deploy.sh' -exec rm -rdf {} +
+  sudo find . -maxdepth 1  -type f -not -name 'start.sh' -not -name 'deploy.sh' -not -name 'balenakey' -exec rm -rdf {} +
 }
 
 build
