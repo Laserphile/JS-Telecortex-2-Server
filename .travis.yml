@@ -12,6 +12,7 @@ jobs:
     - stage: deploy
       language: minimal
       script:
+        - ./build-server.sh
         - ./deploy.sh
 stages:
   - test
