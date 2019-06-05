@@ -10,8 +10,7 @@ jobs:
       cache:
         yarn: true
     - stage: deploy
-      language: node_js
-      node_js: '11'
+      language: minimal
       script:
         - ./build-server.sh
         - ./deploy.sh
