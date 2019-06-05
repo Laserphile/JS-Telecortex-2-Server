@@ -15,8 +15,6 @@ jobs:
       script:
         - ./build-server.sh
         - ./deploy.sh
-      cache:
-        yarn: true
 stages:
   - test
   - deploy
