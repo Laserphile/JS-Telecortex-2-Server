@@ -6,8 +6,7 @@ jobs:
       language: node_js
       node_js: '11'
       script:
-        - yarn test-ci
-        - yarn coverage
+        - yarn test-ci && yarn coverage
       cache:
         yarn: true
     - stage: deploy
