@@ -12,6 +12,8 @@ jobs:
     - stage: deploy
       language: node_js
       node_js: '11'
+      install:
+        - ls
       script:
         - ./build-server.sh
         - ./deploy.sh
