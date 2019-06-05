@@ -10,6 +10,7 @@ RUN sudo apt-get install -y python-dev python-tk python-numpy python3-dev python
 RUN sudo apt-get install -y build-essential cmake
 WORKDIR /usr/src/app
 COPY . .
+RUN ls -a
 RUN mv node_modules_new node_modules
 #RUN sudo ./build-server.sh
 CMD ["/bin/bash", "./start.sh"]

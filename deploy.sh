@@ -9,8 +9,11 @@ deploy () {
   git remote add balena ${BALENA_REMOTE}
 #  git fetch --unshallow origin
   mv node_modules node_modules_new
+  ls
   git add node_modules_new
+  git status
   git commit -am "build" --allow-empty
+  git status
   git push -f balena master
 }
 
