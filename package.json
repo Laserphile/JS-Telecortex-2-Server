@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watch --coverage",
     "test-ci": "jest --ci --coverage",
-    "coverage": "codecov"
+    "coverage": "codecov",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

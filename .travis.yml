@@ -22,10 +22,6 @@ jobs:
 #        - git fetch --unshallow origin
         - git commit -am "build" --allow-empty
         - git push -f balena master
-      cache:
-        yarn: true
-        directories:
-          - essential-build-artifacts-arm
 stages:
   - test
   - deploy
