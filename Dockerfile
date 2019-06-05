@@ -11,5 +11,4 @@ RUN sudo apt-get install -y build-essential cmake
 WORKDIR /usr/src/app
 COPY . .
 #RUN sudo ./build-server.sh
-CMD ["ls -a"]
-#CMD ["/bin/bash", "./start.sh"]
+CMD ["/bin/bash", "./start.sh"]
