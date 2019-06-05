@@ -7,7 +7,7 @@ deploy () {
   ssh-add ./id_rsa
   cat balenakey >> ~/.ssh/known_hosts
   git remote add balena ${BALENA_REMOTE}
-  git fetch --unshallow origin
+#  git fetch --unshallow origin
   mv node_modules node_modules_new
   git add node_modules_new
   git commit -am "build" --allow-empty
