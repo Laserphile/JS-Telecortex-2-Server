@@ -1,0 +1,19 @@
+{
+  "name": "@js-telecortex-2/js-telecortex-2-server",
+  "version": "0.1.2-alpha",
+  "description": "A NodeJS server for controlling APA102/SK9822 LED strips over OPC",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Laserphile/JS-Telecortex-2-Server.git"
+  },
+  "author": "moonbase-labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Laserphile/JS-Telecortex-2-Server/issues"
+  },
+  "homepage": "https://github.com/Laserphile/JS-Telecortex-2-Server#readme"
+}
