@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handleAllOPCMessages handles multiple messages 1`] = `
+Array [
+  Array [
+    Object {
+      "data": Array [
+        0,
+        0,
+        0,
+        0,
+        240,
+        0,
+        0,
+        255,
+      ],
+      "type": "Buffer",
+    },
+    8,
+    [Function],
+  ],
+  Array [
+    Object {
+      "data": Array [
+        0,
+        0,
+        0,
+        0,
+        240,
+        0,
+        0,
+        255,
+      ],
+      "type": "Buffer",
+    },
+    8,
+    [Function],
+  ],
+]
+`;
+
+exports[`handleOPCMessage works 1`] = `
+Array [
+  Object {
+    "data": Array [
+      0,
+      0,
+      0,
+      0,
+      240,
+      0,
+      0,
+      255,
+    ],
+    "type": "Buffer",
+  },
+  8,
+  [Function],
+]
+`;
