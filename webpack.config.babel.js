@@ -2,12 +2,12 @@ import path from 'path';
 
 export default {
   output: {
-    path: path.join(__dirname, `built`),
-    filename: `bundle.js`,
+    path: path.join(__dirname, 'built'),
+    filename: 'bundle.js',
     publicPath: '/'
   },
   mode: 'production',
-  entry: './src/server/main.js',
+  entry: './src/main.js',
   target: 'node',
   module: {
     rules: [
