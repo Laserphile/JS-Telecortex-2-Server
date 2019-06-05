@@ -1,0 +1,2 @@
+exclude_patterns:
+  - "pi-spi-build-patch.js"
