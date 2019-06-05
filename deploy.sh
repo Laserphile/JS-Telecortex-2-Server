@@ -8,6 +8,8 @@ deploy () {
   cat balenakey >> ~/.ssh/known_hosts
   git remote add balena ${BALENA_REMOTE}
   grep -v "node_modules" .gitignore > temp && mv temp .gitignore
+  ls
+  git add node_modules
   git fetch --unshallow origin
   git commit -am "build" --allow-empty
   git push -f balena master
