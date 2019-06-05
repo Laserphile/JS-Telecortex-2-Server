@@ -27,6 +27,7 @@ jobs:
         directories:
           - essential-build-artifacts-arm
 stages:
+  - test
   - deploy
 notifications:
   slack:
