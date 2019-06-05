@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch --coverage",
-    "test-ci": "jest --ci --coverage"
+    "test-ci": "jest --ci --coverage",
+    "coverage": "codecov"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
+    "codecov": "^3.5.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.3.0",

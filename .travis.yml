@@ -7,7 +7,7 @@ jobs:
       node_js: '11'
       script:
         - yarn test-ci
-        - codecov
+        - yarn coverage
       cache:
         yarn: true
     - stage: deploy

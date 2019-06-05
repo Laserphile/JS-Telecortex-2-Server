@@ -10,10 +10,10 @@
 ```
 A rewrite of the [Telecortex](https://github.com/laserphile/telecortex) project in NodeJS which controlls APA102/SK9822 LED strips over OPC
 
-[![Build Status](https://travis-ci.org/Laserphile/JS-Telecortex-2.svg?branch=master)](https://travis-ci.org/Laserphile/JS-Telecortex-2)
-[![Maintainability](https://api.codeclimate.com/v1/badges/89eede666d93740400d9/maintainability)](https://codeclimate.com/github/Laserphile/JS-Telecortex-2/maintainability)
-[![codecov](https://codecov.io/gh/Laserphile/JS-Telecortex-2/branch/master/graph/badge.svg)](https://codecov.io/gh/Laserphile/JS-Telecortex-2)
-[![Known Vulnerabilities](https://snyk.io/test/github/Laserphile/JS-Telecortex-2/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Laserphile/JS-Telecortex-2?targetFile=package.json)
+[![Build Status](https://travis-ci.org/Laserphile/JS-Telecortex-2-Server.svg?branch=master)](https://travis-ci.org/Laserphile/JS-Telecortex-2-Server)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ef74b26938c3f747b39f/maintainability)](https://codeclimate.com/github/Laserphile/JS-Telecortex-2-Server/maintainability)
+[![codecov](https://codecov.io/gh/Laserphile/JS-Telecortex-2-Server/branch/master/graph/badge.svg)](https://codecov.io/gh/Laserphile/JS-Telecortex-2-Server)
+[![Known Vulnerabilities](https://snyk.io/test/github/Laserphile/JS-Telecortex-2-Server/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Laserphile/JS-Telecortex-2-Server?targetFile=package.json)
 
 ## Gifs!
 
