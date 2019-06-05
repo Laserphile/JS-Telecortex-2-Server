@@ -10,5 +10,5 @@ RUN sudo apt-get install -y python-dev python-tk python-numpy python3-dev python
 RUN sudo apt-get install -y build-essential cmake
 WORKDIR /usr/src/app
 COPY . .
-#RUN sudo ./build-server.sh
+RUN sudo ./build-server.sh
 CMD ["/bin/bash", "./start.sh"]
