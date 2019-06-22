@@ -1,5 +1,5 @@
 /* eslint-disable global-require,no-param-reassign */
-import { RPI_SPIDEVS, FRESH_CONTEXT, SERVER_CONF } from '@js-telecortex-2/js-telecortex-2-util';
+import { FRESH_CONTEXT, opcPort } from '@js-telecortex-2/js-telecortex-2-util';
 import { opcTCPServer } from './opc/tcp-server';
 
 let SPI;
@@ -9,6 +9,34 @@ if (process.platform === 'linux') {
 } else {
   SPI = require('./testSpi').default;
 }
+
+const SERVER_CONF = {
+  // port used to listen for OPC commands
+  opcPort,
+  // SPI Clock Speed
+  spiClockSpeed: 10e6,
+  // SPI Data Mode
+  spiMode: 0
+};
+
+export const RPI_SPIDEVS = {
+  0: {
+    bus: 0,
+    device: 0
+  },
+  1: {
+    bus: 0,
+    device: 1
+  },
+  2: {
+    bus: 1,
+    device: 0
+  },
+  3: {
+    bus: 1,
+    device: 1
+  }
+};
 
 const server = () => {
   const { spiClockSpeed, spiMode, opcPort } = SERVER_CONF;
