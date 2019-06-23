@@ -4,8 +4,14 @@ import { mockSingleChannel, mockSpi } from '../testing';
 
 const mockSpi0 = mockSpi(jest.fn());
 
-const mockContext = {
-  channels: mockSingleChannel(mockSpi0)
+const mockContextSk9822 = {
+  channels: mockSingleChannel(mockSpi0),
+  protocol: "colours2sk9822"
+};
+
+const mockContextWs2811 = {
+  channels: mockSingleChannel(mockSpi0),
+  protocol: "colours2ws2811"
 };
 
 const redPixel = [0xff, 0x00, 0x00];
@@ -34,7 +40,7 @@ describe('handleOPCMessage', () => {
       }
     },
     {
-      testName: 'works',
+      testName: 'works with sk9822',
       inArray: composeOPCHeader(0, 3).concat(redPixel),
       validate: (data, response) => {
         expect(mockSpi0.transfer.mock.calls.length).toBe(1);
@@ -45,7 +51,23 @@ describe('handleOPCMessage', () => {
   ].forEach(({ testName, inArray, validate }) => {
     it(testName, () => {
       const data = Buffer.from(inArray);
-      validate(data, handleOPCMessage(mockContext, data));
+      validate(data, handleOPCMessage(mockContextSk9822, data));
+    });
+  });
+  [
+    {
+      testName: 'works with ws2811',
+      inArray: composeOPCHeader(0, 3).concat(redPixel),
+      validate: (data, response) => {
+        expect(mockSpi0.transfer.mock.calls.length).toBe(1);
+        expect(mockSpi0.transfer.mock.calls[0]).toMatchSnapshot();
+        expect(response).toBe(data.length);
+      }
+    }
+  ].forEach(({ testName, inArray, validate }) => {
+    it(testName, () => {
+      const data = Buffer.from(inArray);
+      validate(data, handleOPCMessage(mockContextWs2811, data));
     });
   });
 });
@@ -85,7 +107,7 @@ describe('handleAllOPCMessages', () => {
   ].forEach(({ testName, inArray, callLength, validate }) => {
     it(testName, () => {
       const data = Buffer.from(inArray);
-      validate(data, handleAllOPCMessages(mockContext, data));
+      validate(data, handleAllOPCMessages(mockContextSk9822, data));
       expect(mockSpi0.transfer.mock.calls.length).toBe(callLength);
     });
   });

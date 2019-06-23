@@ -12,11 +12,13 @@ if (process.platform === 'linux') {
 
 const SERVER_CONF = {
   // port used to listen for OPC commands
-  opcPort,
+  port: opcPort,
   // SPI Clock Speed
-  spiClockSpeed: 10e6,
+  spiClockSpeed: 3e6,
   // SPI Data Mode
-  spiMode: 0
+  spiMode: 0,
+  // Protocol to talk to the LEDs over SPI
+  protocol: 'colours2sk9822'
 };
 
 export const RPI_SPIDEVS = {
@@ -39,7 +41,7 @@ export const RPI_SPIDEVS = {
 };
 
 const server = () => {
-  const { spiClockSpeed, spiMode, opcPort } = SERVER_CONF;
+  const { spiClockSpeed, spiMode, port, protocol } = SERVER_CONF;
   // TODO: flick status led
   const channels = Object.entries(RPI_SPIDEVS).reduce((accumulator, [channel, spec]) => {
     spec.spi = SPI.initialize(`/dev/spidev${spec.bus}.${spec.device}`);
@@ -52,7 +54,8 @@ const server = () => {
   const context = {
     ...FRESH_CONTEXT,
     channels,
-    opcPort
+    opcPort: port,
+    protocol
   };
   opcTCPServer(context);
   // opcUDPServer(context);

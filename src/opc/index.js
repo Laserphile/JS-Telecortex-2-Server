@@ -4,7 +4,9 @@ import chalk from 'chalk';
 import {
   consoleErrorHandler,
   colourRateLogger,
-  colours2sk9822
+  colours2sk9822,
+  colours2ws2811,
+  colours2ws2812
 } from '@js-telecortex-2/js-telecortex-2-util';
 import { OPC_HEADER_LEN, parseOPCBody, parseOPCHeader } from './parser';
 import { PartialOPCMsgError } from './errors';
@@ -20,7 +22,10 @@ import { PartialOPCMsgError } from './errors';
  */
 export const handleOPCMessage = (context, msg) => {
   // TODO
-  const { channels, brightness } = context;
+  const { channels, brightness, protocol } = context;
+  const protocolFn = ({
+    colours2sk9822, colours2ws2811, colours2ws2812
+  })[protocol];
   const header = parseOPCHeader(msg);
   // console.log(chalk`{bgMagenta.black  header: } {cyan ${JSON.stringify(header)}}`);
   // console.log(`channels: ${JSON.stringify(channels)}`);
@@ -42,7 +47,7 @@ export const handleOPCMessage = (context, msg) => {
     colourRateLogger(context);
   }
   // TODO: perhaps put message on an async queue
-  const dataBuff = Buffer.from(colours2sk9822(colours, brightness));
+  const dataBuff = Buffer.from(protocolFn(colours, brightness));
   channels[header.channel].spi.transfer(dataBuff, dataBuff.length, consoleErrorHandler);
   return OPC_HEADER_LEN + header.length;
 };

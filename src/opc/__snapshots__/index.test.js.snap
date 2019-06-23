@@ -39,7 +39,7 @@ Array [
 ]
 `;
 
-exports[`handleOPCMessage works 1`] = `
+exports[`handleOPCMessage works with sk9822 1`] = `
 Array [
   Object {
     "data": Array [
@@ -55,6 +55,28 @@ Array [
     "type": "Buffer",
   },
   8,
+  [Function],
+]
+`;
+
+exports[`handleOPCMessage works with ws2811 1`] = `
+Array [
+  Object {
+    "data": Array [
+      26,
+      73,
+      36,
+      146,
+      73,
+      36,
+      146,
+      73,
+      36,
+      128,
+    ],
+    "type": "Buffer",
+  },
+  10,
   [Function],
 ]
 `;
