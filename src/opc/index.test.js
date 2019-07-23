@@ -1,17 +1,18 @@
 import { composeOPCHeader } from '@js-telecortex-2/js-telecortex-2-util';
 import { handleOPCMessage, handleAllOPCMessages } from './index';
-import { mockSingleChannel, mockSpi } from '../testing';
 
-const mockSpi0 = mockSpi(jest.fn());
+const mockSpi0 = jest.fn();
 
 const mockContextSk9822 = {
-  channels: mockSingleChannel(mockSpi0),
-  protocol: "colours2sk9822"
+  channels: { 0: mockSpi0 },
+  protocol: "colours2sk9822",
+  devType: "spi"
 };
 
 const mockContextWs2811 = {
-  channels: mockSingleChannel(mockSpi0),
-  protocol: "colours2ws2811"
+  channels: { 0: mockSpi0 },
+  protocol: "colours2ws2811",
+  devType: "ws281x"
 };
 
 const redPixel = [0xff, 0x00, 0x00];
@@ -35,7 +36,7 @@ describe('handleOPCMessage', () => {
       testName: 'handles invalid channel',
       inArray: composeOPCHeader(1, 3).concat(redPixel),
       validate: (data, response) => {
-        expect(mockSpi0.transfer.mock.calls.length).toBe(0);
+        expect(mockSpi0.mock.calls.length).toBe(0);
         expect(response).toBe(data.length);
       }
     },
@@ -43,8 +44,8 @@ describe('handleOPCMessage', () => {
       testName: 'works with sk9822',
       inArray: composeOPCHeader(0, 3).concat(redPixel),
       validate: (data, response) => {
-        expect(mockSpi0.transfer.mock.calls.length).toBe(1);
-        expect(mockSpi0.transfer.mock.calls[0]).toMatchSnapshot();
+        expect(mockSpi0.mock.calls.length).toBe(1);
+        expect(mockSpi0.mock.calls[0]).toMatchSnapshot();
         expect(response).toBe(data.length);
       }
     }
@@ -59,8 +60,8 @@ describe('handleOPCMessage', () => {
       testName: 'works with ws2811',
       inArray: composeOPCHeader(0, 3).concat(redPixel),
       validate: (data, response) => {
-        expect(mockSpi0.transfer.mock.calls.length).toBe(1);
-        expect(mockSpi0.transfer.mock.calls[0]).toMatchSnapshot();
+        expect(mockSpi0.mock.calls.length).toBe(1);
+        expect(mockSpi0.mock.calls[0]).toMatchSnapshot();
         expect(response).toBe(data.length);
       }
     }
@@ -84,7 +85,7 @@ describe('handleAllOPCMessages', () => {
       ),
       callLength: 2,
       validate: (_, response) => {
-        expect(mockSpi0.transfer.mock.calls).toMatchSnapshot();
+        expect(mockSpi0.mock.calls).toMatchSnapshot();
         expect(response).toBe(undefined);
       }
     },
@@ -108,7 +109,7 @@ describe('handleAllOPCMessages', () => {
     it(testName, () => {
       const data = Buffer.from(inArray);
       validate(data, handleAllOPCMessages(mockContextSk9822, data));
-      expect(mockSpi0.transfer.mock.calls.length).toBe(callLength);
+      expect(mockSpi0.mock.calls.length).toBe(callLength);
     });
   });
 });

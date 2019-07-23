@@ -3,46 +3,7 @@
 exports[`handleAllOPCMessages handles multiple messages 1`] = `
 Array [
   Array [
-    Object {
-      "data": Array [
-        0,
-        0,
-        0,
-        0,
-        240,
-        0,
-        0,
-        255,
-      ],
-      "type": "Buffer",
-    },
-    8,
-    [Function],
-  ],
-  Array [
-    Object {
-      "data": Array [
-        0,
-        0,
-        0,
-        0,
-        240,
-        0,
-        0,
-        255,
-      ],
-      "type": "Buffer",
-    },
-    8,
-    [Function],
-  ],
-]
-`;
-
-exports[`handleOPCMessage works with sk9822 1`] = `
-Array [
-  Object {
-    "data": Array [
+    Array [
       0,
       0,
       0,
@@ -52,31 +13,41 @@ Array [
       0,
       255,
     ],
-    "type": "Buffer",
-  },
-  8,
-  [Function],
+  ],
+  Array [
+    Array [
+      0,
+      0,
+      0,
+      0,
+      240,
+      0,
+      0,
+      255,
+    ],
+  ],
+]
+`;
+
+exports[`handleOPCMessage works with sk9822 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    0,
+    240,
+    0,
+    0,
+    255,
+  ],
 ]
 `;
 
 exports[`handleOPCMessage works with ws2811 1`] = `
 Array [
-  Object {
-    "data": Array [
-      26,
-      73,
-      36,
-      146,
-      73,
-      36,
-      146,
-      73,
-      36,
-      128,
-    ],
-    "type": "Buffer",
-  },
-  10,
-  [Function],
+  Array [
+    32768,
+  ],
 ]
 `;

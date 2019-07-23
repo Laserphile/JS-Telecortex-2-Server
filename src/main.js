@@ -1,11 +1,13 @@
 /* eslint-disable global-require,no-param-reassign */
-import { FRESH_CONTEXT, opcPort } from '@js-telecortex-2/js-telecortex-2-util';
+import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js-telecortex-2-util';
 import { opcTCPServer } from './opc/tcp-server';
 
 let SPI;
+let ws281x;
 // noinspection ES6ModulesDependencies
 if (process.platform === 'linux') {
   SPI = require('pi-spi');
+  ws281x = require('rpi-ws281x-native');
 } else {
   SPI = require('./testSpi').default;
 }
@@ -17,8 +19,14 @@ const SERVER_CONF = {
   spiClockSpeed: 3e6,
   // SPI Data Mode
   spiMode: 0,
-  // Protocol to talk to the LEDs over SPI
-  protocol: 'colours2sk9822'
+  // Protocol to talk to the LEDs
+  protocol: 'colours2sk9822',
+  // protocol: 'colours2ws2812',
+  // Type of device used ('spi' or 'ws281x')
+  devType: 'spi'
+  // devType: 'ws281x',
+  // Number of leds per channel (only used for 'ws281x' devType)
+  // numLeds: 512,
 };
 
 export const RPI_SPIDEVS = {
@@ -41,15 +49,28 @@ export const RPI_SPIDEVS = {
 };
 
 const server = () => {
-  const { spiClockSpeed, spiMode, port, protocol } = SERVER_CONF;
+  const { spiClockSpeed, spiMode, port, protocol, devType } = SERVER_CONF;
   // TODO: flick status led
-  const channels = Object.entries(RPI_SPIDEVS).reduce((accumulator, [channel, spec]) => {
-    spec.spi = SPI.initialize(`/dev/spidev${spec.bus}.${spec.device}`);
-    spec.spi.clockSpeed(spiClockSpeed);
-    spec.spi.dataMode(spiMode);
-    accumulator[channel] = spec;
-    return accumulator;
-  }, {});
+
+  let channels = {};
+
+  if (devType === 'spi') {
+    Object.entries(RPI_SPIDEVS).forEach(([channel, spec]) => {
+      const spi = SPI.initialize(`/dev/spidev${spec.bus}.${spec.device}`);
+      spi.clockSpeed(spiClockSpeed);
+      spi.dataMode(spiMode);
+      channels[channel] = data => {
+        spi.transfer(Buffer.from(data), data.length, consoleErrorHandler);
+      };
+    });
+  } else if (devType === 'ws281x') {
+    ws281x.init(SERVER_CONF.numLeds);
+    channels = {
+      0: data => {
+        ws281x.render(Uint32Array.from(data));
+      }
+    };
+  }
 
   const context = {
     ...FRESH_CONTEXT,

@@ -2,8 +2,8 @@
 /* eslint-disable no-param-reassign */
 import chalk from 'chalk';
 import {
-  consoleErrorHandler,
   colourRateLogger,
+  // coloursToString
 } from '@js-telecortex-2/js-telecortex-2-util';
 import {
   colours2sk9822,
@@ -12,11 +12,6 @@ import {
 } from '../protocols/index.js';
 import { OPC_HEADER_LEN, parseOPCBody, parseOPCHeader } from './parser';
 import { PartialOPCMsgError } from './errors';
-
-/**
- * Limit number of colours to display in a body dump
- */
-// const colourLimit = 3;
 
 /**
  * parse a single OPC message and send data to channels
@@ -37,20 +32,20 @@ export const handleOPCMessage = (context, msg) => {
     return OPC_HEADER_LEN + header.length;
   }
   const colours = parseOPCBody(msg, header.length);
-  // console.log(
-  //   [
-  //     chalk`{bgMagenta.black  body: } (${colours.length})`,
-  //     coloursToString(colours.slice(0, colourLimit ? colourLimit : colours.length)),
-  //     colours.length > colourLimit ? '...' : ''
-  //   ].join('\n')
-  // );
   context.channelColours = { [header.channel]: colours };
   if (header.channel >= 0) {
     colourRateLogger(context);
   }
   // TODO: perhaps put message on an async queue
-  const dataBuff = Buffer.from(protocolFn(colours, brightness));
-  channels[header.channel].spi.transfer(dataBuff, dataBuff.length, consoleErrorHandler);
+  const dataBuff = protocolFn(colours, brightness);
+  // console.log(
+  //   [
+  //     chalk`{bgMagenta.black  body: } (${colours.length})`,
+  //     coloursToString(colours.slice(0, colourLimit ? colourLimit : colours.length)) + (colours.length > colourLimit ? '...' : ''),
+  //     dataBuff.slice(0, colourLimit ? colourLimit : dataBuff.length )
+  //   ].join('\n')
+  // );
+  channels[header.channel](dataBuff);
   return OPC_HEADER_LEN + header.length;
 };
 
