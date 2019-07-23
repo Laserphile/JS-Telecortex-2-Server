@@ -60,5 +60,10 @@
     "dgram": "^1.0.1",
     "lodash": "^4.17.11",
     "pi-spi": "^1.0.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/src/testing/setupTests.js"
+    ]
   }
 }
