@@ -4,10 +4,12 @@ import chalk from 'chalk';
 import {
   consoleErrorHandler,
   colourRateLogger,
+} from '@js-telecortex-2/js-telecortex-2-util';
+import {
   colours2sk9822,
   colours2ws2811,
   colours2ws2812
-} from '@js-telecortex-2/js-telecortex-2-util';
+} from '../protocols/index.js';
 import { OPC_HEADER_LEN, parseOPCBody, parseOPCHeader } from './parser';
 import { PartialOPCMsgError } from './errors';
 

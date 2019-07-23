@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rgb2sk9822 works 1`] = `
+Array [
+  240,
+  0,
+  0,
+  255,
+]
+`;
