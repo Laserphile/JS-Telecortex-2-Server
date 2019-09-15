@@ -1,13 +1,10 @@
 import { flatten, rangeRight } from 'lodash';
-import { uint8Max, uint8Bits } from '@js-telecortex-2/js-telecortex-2-util';
+
+const uint8Max = 0x100;
 
 // order of colours in ws2811 frame
 const ws2811ColourOrder = ['g', 'r', 'b'];
 const ws2812ColourOrder = ['r', 'g', 'b'];
-// symbols in ws281x protocol
-const ws281xReset = 0b000;
-const ws281xBit1 = 0b110;
-const ws281xBit0 = 0b100;
 
 /**
  * Given a colorsys RGB objects and a float brightness value from 0 to 1,

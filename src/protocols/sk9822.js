@@ -1,6 +1,7 @@
 import { flatten, mapValues } from 'lodash';
-import { uint8Max } from '@js-telecortex-2/js-telecortex-2-util';
 import { createGammaTable } from './gamma';
+
+const uint8Max = 0x100;
 
 // Constant prefix in first byte of sk9822 frame
 const sk9822Prefix = 0xe0;
