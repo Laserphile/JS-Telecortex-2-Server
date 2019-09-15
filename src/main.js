@@ -7,7 +7,7 @@ let ws281x;
 // noinspection ES6ModulesDependencies
 if (process.platform === 'linux') {
   SPI = require('pi-spi');
-  ws281x = require('rpi-ws281x-native');
+  // ws281x = require('rpi-ws281x-native');
 } else {
   SPI = require('./testSpi').default;
 }
