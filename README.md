@@ -14,6 +14,8 @@ A rewrite of the [Telecortex](https://github.com/laserphile/telecortex) project 
 [![Maintainability](https://api.codeclimate.com/v1/badges/ef74b26938c3f747b39f/maintainability)](https://codeclimate.com/github/Laserphile/JS-Telecortex-2-Server/maintainability)
 [![codecov](https://codecov.io/gh/Laserphile/JS-Telecortex-2-Server/branch/master/graph/badge.svg)](https://codecov.io/gh/Laserphile/JS-Telecortex-2-Server)
 [![Known Vulnerabilities](https://snyk.io/test/github/Laserphile/JS-Telecortex-2-Server/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Laserphile/JS-Telecortex-2-Server?targetFile=package.json)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Laserphile/JS-Telecortex-2-Server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Laserphile/JS-Telecortex-2-Server/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/Laserphile/JS-Telecortex-2-Server.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Laserphile/JS-Telecortex-2-Server/alerts/)
 
 ## Gifs!
 
