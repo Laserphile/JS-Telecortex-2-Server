@@ -1,4 +1,4 @@
-import { flatten, rangeRight } from 'lodash';
+import { flatten } from 'lodash';
 
 const uint8Max = 0x100;
 
