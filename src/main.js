@@ -3,11 +3,9 @@ import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js
 import { opcTCPServer } from './opc/tcp-server';
 
 let SPI;
-let ws281x;
 // noinspection ES6ModulesDependencies
 if (process.platform === 'linux') {
   SPI = require('pi-spi');
-  // ws281x = require('rpi-ws281x-native');
 } else {
   SPI = require('./testSpi').default;
 }
@@ -21,12 +19,8 @@ const SERVER_CONF = {
   spiMode: 0,
   // Protocol to talk to the LEDs
   protocol: 'colours2sk9822',
-  // protocol: 'colours2ws2812',
-  // Type of device used ('spi' or 'ws281x')
+  // Type of device used ('spi')
   devType: 'spi'
-  // devType: 'ws281x',
-  // Number of leds per channel (only used for 'ws281x' devType)
-  // numLeds: 512,
 };
 
 export const RPI_SPIDEVS = {
@@ -63,13 +57,6 @@ const server = () => {
         spi.transfer(Buffer.from(data), data.length, consoleErrorHandler);
       };
     });
-  } else if (devType === 'ws281x') {
-    ws281x.init(SERVER_CONF.numLeds);
-    channels = {
-      0: data => {
-        ws281x.render(Uint32Array.from(data));
-      }
-    };
   }
 
   const context = {
