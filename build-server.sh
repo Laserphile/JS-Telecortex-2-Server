@@ -14,4 +14,8 @@ build () {
   ls
 }
 
-build
+if [ -n "$1" ]; then
+  build
+else
+  echo "don't run this locally"
+fi
