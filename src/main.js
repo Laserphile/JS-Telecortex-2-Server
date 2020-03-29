@@ -1,6 +1,7 @@
 /* eslint-disable global-require,no-param-reassign */
 import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js-telecortex-2-util';
 import { opcTCPServer } from './opc/tcp-server';
+import { opcUDPServer } from './opc/udp-server';
 
 let SPI;
 // noinspection ES6ModulesDependencies
@@ -20,7 +21,9 @@ const SERVER_CONF = {
   // Protocol to talk to the LEDs
   protocol: 'colours2sk9822',
   // Type of device used ('spi')
-  devType: 'spi'
+  devType: 'spi',
+  // The OSI Transport Layer protocol to use (TCP / UDP)
+  transportProtocol: 'TCP'
 };
 
 export const RPI_SPIDEVS = {
@@ -43,7 +46,7 @@ export const RPI_SPIDEVS = {
 };
 
 const server = () => {
-  const { spiClockSpeed, spiMode, port, protocol, devType } = SERVER_CONF;
+  const { spiClockSpeed, spiMode, port, protocol, devType, transportProtocol } = SERVER_CONF;
   // TODO: flick status led
 
   let channels = {};
@@ -65,8 +68,17 @@ const server = () => {
     opcPort: port,
     protocol
   };
-  opcTCPServer(context);
-  // opcUDPServer(context);
+
+  switch(transportProtocol) {
+    case "TCP":
+      opcTCPServer(context);
+      break;
+    case "UDP":
+      opcUDPServer(context);
+      break;
+    default:
+      console.log(`unknown transportProtocol: ${transportProtocol}`);
+  }
 };
 
 server();

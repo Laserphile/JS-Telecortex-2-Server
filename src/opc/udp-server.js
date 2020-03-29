@@ -1,7 +1,8 @@
 // TODO remove this eslint disable
 /* eslint-disable no-param-reassign */
+import chalk from 'chalk';
 import { createSocket } from 'dgram';
-import { handleOPCMessage } from './index';
+import { handleAllOPCMessages } from './index';
 
 /**
  * Open Pixel Control server implementation of the driverFactory.driver interface.
@@ -11,29 +12,29 @@ import { handleOPCMessage } from './index';
  */
 export const opcUDPServer = context => {
   const { opcPort } = context;
-  console.log(`About to create OPC UDP server on port ${opcPort}`);
+  // console.log(chalk`{cyan 🛰  UDP Server} About to create OPC UDP server on port ${opcPort}`);
 
   context.server = createSocket('udp4', () => {
-    console.log('socket create callback');
+    // console.log(chalk`{cyan 🛰  UDP Server} socket create callback`);
   });
 
   context.server.on('error', err => {
-    console.log(`server error:\n${err.stack}`);
+    console.log(chalk`{cyan 🛰  UDP Server} error:\n${err.stack}`);
     context.server.close();
   });
 
   context.server.on('message', (msg, rinfo) => {
-    console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-    handleOPCMessage(context, msg);
+    // console.log(chalk`{cyan 🛰  UDP Server} got: ${msg.toString('hex')} from ${rinfo.address}:${rinfo.port}`);
+    handleAllOPCMessages(context, msg);
   });
 
   context.server.on('listening', () => {
     const address = context.server.address();
-    console.log(`server listening ${address.address}:${address.port}`);
+    console.log(chalk`{cyan 🛰  UDP Server} listening on port: {white ${address.address}:${address.port}}`);
   });
 
   context.server.bind(opcPort, '127.0.0.1', () => {
-    console.log('socket bind callback');
+    // console.log(chalk`{cyan 🛰  UDP Server}  bind callback`);
   });
 
   console.log(`After bind ${context.server}`);

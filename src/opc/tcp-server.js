@@ -1,7 +1,7 @@
 // TODO remove this eslint disable
 /* eslint-disable no-param-reassign */
-import { createServer } from 'net';
 import chalk from 'chalk';
+import { createServer } from 'net';
 import { handleAllOPCMessages } from './index';
 
 /**
@@ -45,6 +45,6 @@ export const opcTCPServer = context => {
   });
 
   context.server.listen(opcPort, () => {
-    console.log(chalk`{cyan 🛰  Server} listening on port: {white ${opcPort}}`);
+    console.log(chalk`{cyan 🛰  TCP Server} listening on port: {white ${opcPort}}`);
   });
 };
