@@ -1,7 +1,7 @@
 {
   "name": "@js-telecortex-2/js-telecortex-2-server",
   "version": "0.1.2-alpha",
-  "description": "A NodeJS server for controlling APA102/SK9822 LED strips over OPC",
+  "description": "A NodeJS server for controlling APA102/SK9822/WS281X LED strips over OPC",
   "main": "index.js",
   "scripts": {
     "test": "jest --watch --coverage",
@@ -57,7 +57,6 @@
     "@js-telecortex-2/js-telecortex-2-util": "1.1.6",
     "binary": "^0.3.0",
     "chalk": "^2.4.2",
-    "dgram": "^1.0.1",
     "lodash": "^4.17.11",
     "pi-spi": "^1.0.3"
   },
@@ -65,5 +64,8 @@
     "setupFiles": [
       "<rootDir>/src/testing/setupTests.js"
     ]
+  },
+  "engines": {
+    "node" : ">=10.0"
   }
 }

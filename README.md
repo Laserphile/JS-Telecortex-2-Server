@@ -125,9 +125,20 @@ This will not run on OSX. You need spidev for pi-spi to work
 ### Balena dev setup
 If you want to push to your pi without going through the pipeline. Make sure you also "enable local mode" on BalenaCloud if its a cloud image.
 - `npm install --global --production --unsafe-perm balena-cli`
-- `sudo balena local scan`
-Get the ip address of the device you want to push to from the output.
-- `sudo balena push 192.168.1.120` or whatever the IP is.
+- Get the hostname of the device you want to push to with `sudo balena local scan`
+- build and push to the device with `balena push <hostname>`
+- Be patient, the output will just stop for about an hour with no loading screen.
+- You'll know the push completed when you get to
+  ```
+  [Build]   [main] Successfully tagged local_image_main:latest
+  [Info]    Streaming device logs...
+  ```
+
+To view the outupt of the main container, you can do
+- `balena ssh <hostname>`
+- then inside that session, do `balena container ls` to get a list of running containers. the app
+  is likely the latest created container which means is necessary for the next step to work
+- Attach to the output of the main container with `balena attach $(balena container ls -lq)`
 
 # Usage
 
