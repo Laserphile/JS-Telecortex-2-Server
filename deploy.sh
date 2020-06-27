@@ -8,6 +8,7 @@ deploy () {
   cat balenakey >> ~/.ssh/known_hosts
   git remote add balena ${BALENA_REMOTE}
   git fetch --unshallow origin
+  git .
   git commit -am "build" --allow-empty
   git push -f balena master
 }
