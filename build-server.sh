@@ -1,29 +1,17 @@
 #!/usr/bin/env bash
 
 build () {
-  name="$(basename "$PWD")"
-  echo "Installing dependencies for ${name}..."
+  echo "Installing dependencies..."
   rm -rdf node_modules
   yarn
-  cp 'pi-spi-build-patch.js' 'node_modules/pi-spi/index.js'
-
-  echo "Building ${name} ..."
+  cat pi-spi-build-patch.js > node_modules/pi-spi/index.js
+  echo "Building..."
   npm run build
-  echo "Cleaning up  for ${name} ..."
-  build_dir="../${name}-build/"
-  mkdir -p "${build_dir}/node_modules"
-  cp -r 'node_modules/pi-spi' "${build_dir}/node_modules"
-  cp 'start.sh' "$build_dir"
-  cd '../' || return
-    sudo rm -rdf "${name}.bak" \
-    && mv "$name" "${name}.bak" \
-    && mv "${name}-build" "$name"
-  cd "$name" || return
+  echo "Cleaning up..."
+  cd node_modules && sudo find . -maxdepth 1  -type d -not -name 'pi-spi' -not -name '.' -not -name '..' -maxdepth 1 -exec rm -rf {} + && cd ..
+  sudo find . -maxdepth 1  -type d -not -name 'node_modules' -not -name 'built' -not -name '.' -exec rm -rdf {} +
+  sudo find . -maxdepth 1  -type f -not -name 'start.sh' -exec rm -rdf {} +
   ls
 }
 
-if [ -n "$1" ]; then
-  build
-else
-  echo "don't run this locally"
-fi
+build
