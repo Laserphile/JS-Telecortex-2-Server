@@ -23,7 +23,7 @@ const SERVER_CONF = {
   // Type of device used ('spi')
   devType: 'spi',
   // The OSI Transport Layer protocol to use (TCP / UDP)
-  transportProtocol: 'TCP'
+  transportProtocol: 'UDP'
 };
 
 export const RPI_SPIDEVS = {
