@@ -33,7 +33,7 @@ export const opcUDPServer = context => {
     console.log(chalk`{cyan 🛰  UDP Server} listening on port: {white ${address.address}:${address.port}}`);
   });
 
-  context.server.bind(opcPort, '127.0.0.1', () => {
+  context.server.bind(opcPort, '0.0.0.0', () => {
     // console.log(chalk`{cyan 🛰  UDP Server}  bind callback`);
   });
 
