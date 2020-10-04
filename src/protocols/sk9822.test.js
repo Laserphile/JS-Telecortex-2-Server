@@ -1,4 +1,5 @@
-import {rgb2sk9822} from './sk9822'
+import { rgb2sk9822 } from './sk9822';
+
 require('../testing/setupTests.js');
 
 describe('rgb2sk9822', () => {

@@ -30,7 +30,9 @@ export const opcUDPServer = context => {
 
   context.server.on('listening', () => {
     const address = context.server.address();
-    console.log(chalk`{cyan 🛰  UDP Server} listening on port: {white ${address.address}:${address.port}}`);
+    console.log(
+      chalk`{cyan 🛰  UDP Server} listening on port: {white ${address.address}:${address.port}}`
+    );
   });
 
   context.server.bind(opcPort, '0.0.0.0', () => {

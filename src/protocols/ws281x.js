@@ -21,7 +21,7 @@ export const rgb2ws2811 = (colour, brightness = 0.5) => {
  */
 export const rgb2ws2812 = (colour, brightness = 0.5) => {
   const pixels = ws2812ColourOrder.map(key => Math.round(brightness * colour[key]) % uint8Max);
-  return [ ((pixels[0] & 0xff) << 16) + ((pixels[1] & 0xff) << 8) + (pixels[2] & 0xff) ];
+  return [((pixels[0] & 0xff) << 16) + ((pixels[1] & 0xff) << 8) + (pixels[2] & 0xff)];
 };
 
 /**

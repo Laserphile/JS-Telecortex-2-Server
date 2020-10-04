@@ -49,7 +49,7 @@ const server = () => {
   const { spiClockSpeed, spiMode, port, protocol, devType, transportProtocol } = SERVER_CONF;
   // TODO: flick status led
 
-  let channels = {};
+  const channels = {};
 
   if (devType === 'spi') {
     Object.entries(RPI_SPIDEVS).forEach(([channel, spec]) => {
@@ -69,11 +69,11 @@ const server = () => {
     protocol
   };
 
-  switch(transportProtocol) {
-    case "TCP":
+  switch (transportProtocol) {
+    case 'TCP':
       opcTCPServer(context);
       break;
-    case "UDP":
+    case 'UDP':
       opcUDPServer(context);
       break;
     default:

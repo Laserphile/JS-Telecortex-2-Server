@@ -5,14 +5,14 @@ const mockSpi0 = jest.fn();
 
 const mockContextSk9822 = {
   channels: { 0: mockSpi0 },
-  protocol: "colours2sk9822",
-  devType: "spi"
+  protocol: 'colours2sk9822',
+  devType: 'spi'
 };
 
 const mockContextWs2811 = {
   channels: { 0: mockSpi0 },
-  protocol: "colours2ws2811",
-  devType: "ws281x"
+  protocol: 'colours2ws2811',
+  devType: 'ws281x'
 };
 
 const redPixel = [0xff, 0x00, 0x00];

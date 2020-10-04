@@ -56,6 +56,10 @@ describe('parseOPCBody', () => {
       parseOPCBody(
         Buffer.from([0x01, 0x00, 0x00, 0x09, 0xff, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0xff])
       )
-    ).toEqual([{ r: 255, g: 0, b: 0 }, { r: 0, g: 255, b: 0 }, { r: 0, g: 0, b: 255 }]);
+    ).toEqual([
+      { r: 255, g: 0, b: 0 },
+      { r: 0, g: 255, b: 0 },
+      { r: 0, g: 0, b: 255 }
+    ]);
   });
 });

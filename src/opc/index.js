@@ -2,14 +2,10 @@
 /* eslint-disable no-param-reassign */
 import chalk from 'chalk';
 import {
-  colourRateLogger,
+  colourRateLogger
   // coloursToString
 } from '@js-telecortex-2/js-telecortex-2-util';
-import {
-  colours2sk9822,
-  colours2ws2811,
-  colours2ws2812
-} from '../protocols/index.js';
+import { colours2sk9822, colours2ws2811, colours2ws2812 } from '../protocols/index';
 import { OPC_HEADER_LEN, parseOPCBody, parseOPCHeader } from './parser';
 import { PartialOPCMsgError } from './errors';
 
@@ -20,9 +16,11 @@ import { PartialOPCMsgError } from './errors';
 export const handleOPCMessage = (context, msg) => {
   // TODO
   const { channels, brightness, protocol } = context;
-  const protocolFn = ({
-    colours2sk9822, colours2ws2811, colours2ws2812
-  })[protocol];
+  const protocolFn = {
+    colours2sk9822,
+    colours2ws2811,
+    colours2ws2812
+  }[protocol];
   const header = parseOPCHeader(msg);
   // console.log(chalk`{bgMagenta.black  header: } {cyan ${JSON.stringify(header)}}`);
   // console.log(`channels: ${JSON.stringify(channels)}`);

@@ -57,8 +57,10 @@
     "@js-telecortex-2/js-telecortex-2-util": "1.1.6",
     "binary": "^0.3.0",
     "chalk": "^2.4.2",
+    "expect": "^26.4.2",
     "lodash": "^4.17.11",
-    "pi-spi": "^1.0.3"
+    "pi-spi": "^1.0.3",
+    "pixelblaze-expander": "0.0.1"
   },
   "jest": {
     "setupFiles": [
@@ -66,6 +68,6 @@
     ]
   },
   "engines": {
-    "node" : ">=10.0"
+    "node": ">=10.0"
   }
 }

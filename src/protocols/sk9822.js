@@ -34,4 +34,6 @@ export const rgb2sk9822 = (colour, brightness = 0.5) => {
  * @return {number[]} a complete sk9822 message for the strip
  */
 export const colours2sk9822 = (colours, brightness) =>
-  Array.from(sk9822ResetFrame).concat(flatten(colours.map(colour => rgb2sk9822(colour, brightness))));
+  Array.from(sk9822ResetFrame).concat(
+    flatten(colours.map(colour => rgb2sk9822(colour, brightness)))
+  );
