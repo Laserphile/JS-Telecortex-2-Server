@@ -61,7 +61,8 @@
     "lodash": "^4.17.11",
     "pi-spi": "^1.0.3",
     "pixelblaze-expander": "0.0.2",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "yargs": "^16.0.3"
   },
   "jest": {
     "setupFiles": [

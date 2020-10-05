@@ -5,13 +5,13 @@ const mockSpi0 = jest.fn();
 
 const mockContextSk9822 = {
   channels: { 0: mockSpi0 },
-  protocol: 'colours2sk9822',
+  middlewareProtocol: 'colours2sk9822',
   devType: 'spi'
 };
 
 const mockContextWs2811 = {
   channels: { 0: mockSpi0 },
-  protocol: 'colours2ws2811',
+  middlewareProtocol: 'colours2ws2811',
   devType: 'ws281x'
 };
 

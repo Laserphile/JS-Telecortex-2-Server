@@ -11,19 +11,22 @@ import { PartialOPCMsgError } from './errors';
 
 // const colourLogLimit = 10;
 
+export const MIDDLEWARE_OPTIONS = {
+  colours2sk9822,
+  colours2ws2811,
+  colours2ws2812,
+  colours2rgb
+};
+
 /**
  * parse a single OPC message and send data to channels
  * @return number of bytes read
  */
 export const handleOPCMessage = (context, msg) => {
   // TODO
-  const { channels, brightness, protocol } = context;
-  const protocolFn = {
-    colours2sk9822,
-    colours2ws2811,
-    colours2ws2812,
-    colours2rgb
-  }[protocol];
+  const { channels, brightness, middlewareProtocol } = context;
+  const middlewareFn = MIDDLEWARE_OPTIONS[middlewareProtocol];
+  if (!middlewareFn) throw new Error(`unknown middlewareProtocol: `, middlewareProtocol);
   const header = parseOPCHeader(msg);
   const { channel, length } = header;
   // console.log(chalk`{bgMagenta.black  header: } {cyan ${JSON.stringify(header)}}`);
@@ -39,7 +42,7 @@ export const handleOPCMessage = (context, msg) => {
     colourRateLogger(context);
   }
   // TODO: perhaps put message on an async queue
-  const dataBuff = protocolFn(colours, brightness);
+  const dataBuff = middlewareFn(colours, brightness);
   // console.log(
   //   [
   //     chalk`{bgMagenta.black  body: } (${colours.length})`,
