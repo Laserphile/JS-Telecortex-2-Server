@@ -5,9 +5,11 @@ import {
   colourRateLogger
   // coloursToString
 } from '@js-telecortex-2/js-telecortex-2-util';
-import { colours2sk9822, colours2ws2811, colours2ws2812 } from '../protocols/index';
+import { colours2sk9822, colours2ws2811, colours2ws2812, colours2rgb } from '../protocols';
 import { OPC_HEADER_LEN, parseOPCBody, parseOPCHeader } from './parser';
 import { PartialOPCMsgError } from './errors';
+
+// const colourLogLimit = 10;
 
 /**
  * parse a single OPC message and send data to channels
@@ -19,19 +21,21 @@ export const handleOPCMessage = (context, msg) => {
   const protocolFn = {
     colours2sk9822,
     colours2ws2811,
-    colours2ws2812
+    colours2ws2812,
+    colours2rgb
   }[protocol];
   const header = parseOPCHeader(msg);
+  const { channel, length } = header;
   // console.log(chalk`{bgMagenta.black  header: } {cyan ${JSON.stringify(header)}}`);
   // console.log(`channels: ${JSON.stringify(channels)}`);
-  if (Object.keys(channels).indexOf(String(header.channel)) < 0) {
+  if (Object.keys(channels).indexOf(String(channel)) < 0) {
     // TODO: throw error instead of just console.log?
-    console.error(chalk`{red invalid channel ${header.channel} not in ${Object.keys(channels)}}`);
-    return OPC_HEADER_LEN + header.length;
+    console.error(chalk`{red invalid channel ${channel} not in ${Object.keys(channels)}}`);
+    return OPC_HEADER_LEN + length;
   }
-  const colours = parseOPCBody(msg, header.length);
-  context.channelColours = { [header.channel]: colours };
-  if (header.channel >= 0) {
+  const colours = parseOPCBody(msg, length);
+  context.channelColours = { [channel]: colours };
+  if (channel >= 0) {
     colourRateLogger(context);
   }
   // TODO: perhaps put message on an async queue
@@ -39,12 +43,13 @@ export const handleOPCMessage = (context, msg) => {
   // console.log(
   //   [
   //     chalk`{bgMagenta.black  body: } (${colours.length})`,
-  //     coloursToString(colours.slice(0, colourLimit ? colourLimit : colours.length)) + (colours.length > colourLimit ? '...' : ''),
-  //     dataBuff.slice(0, colourLimit ? colourLimit : dataBuff.length )
+  //     coloursToString(colours.slice(0, colourLogLimit || colours.length)) +
+  //       (colours.length > colourLogLimit ? '...' : ''),
+  //     dataBuff.slice(0, colourLogLimit || dataBuff.length)
   //   ].join('\n')
   // );
   channels[header.channel](dataBuff);
-  return OPC_HEADER_LEN + header.length;
+  return OPC_HEADER_LEN + length;
 };
 
 /**

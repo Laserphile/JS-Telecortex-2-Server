@@ -23,8 +23,8 @@ export const opcUDPServer = context => {
     context.server.close();
   });
 
-  context.server.on('message', (msg, rinfo) => {
-    // console.log(chalk`{cyan 🛰  UDP Server} got: ${msg.toString('hex')} from ${rinfo.address}:${rinfo.port}`);
+  context.server.on('message', (msg, { address, port }) => {
+    // console.log(chalk`{cyan 🛰  UDP Server} got: ${msg.toString('hex')} from ${address}:${port}`);
     handleAllOPCMessages(context, msg);
   });
 
@@ -39,7 +39,7 @@ export const opcUDPServer = context => {
     // console.log(chalk`{cyan 🛰  UDP Server}  bind callback`);
   });
 
-  console.log(`After bind ${context.server}`);
+  // console.log(`After bind ${context.server}`);
 
   // context.server.close(() => {
   //   console.log('socket close callback');
