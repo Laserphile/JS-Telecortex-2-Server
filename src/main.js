@@ -1,8 +1,10 @@
 /* eslint-disable global-require,no-param-reassign */
+import sourceMapSupport from 'source-map-support'
 import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js-telecortex-2-util';
 import { opcTCPServer } from './opc/tcp-server';
 import { opcUDPServer } from './opc/udp-server';
 
+sourceMapSupport.install();
 let SPI;
 // noinspection ES6ModulesDependencies
 if (process.platform === 'linux') {
