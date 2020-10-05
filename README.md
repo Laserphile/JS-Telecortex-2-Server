@@ -33,11 +33,11 @@ A rewrite of the [Telecortex](https://github.com/laserphile/telecortex) project 
 
 Our Balena image running on a Raspberry Pi 3 can control 4 channels of 300 SK9822 pixels pixels with UDP over on-board WiFi at about 200 FPS.
 
-## RaspberryPi Setup
-
-We've created a docker image that sets up your Raspberry Pi 3B+ as an Open Pixel Control server with 4 SPI ports. The docker image is designed to run on [BalenaOS](https://www.balena.io/os/). This is the recommended way of using TeleCortex if you don't need to do development on the server. Otherwise, there's a lot of messing around required.
+## Setup
 
 ### Option 1: Balena Cloud (Recommended)
+
+We've created a docker image that sets up your Raspberry Pi 3B+ as an Open Pixel Control server with 4 SPI ports. The docker image is designed to run on [BalenaOS](https://www.balena.io/os/). This is the recommended way of using TeleCortex if you don't need to do development on the server. Otherwise, there's a lot of messing around required.
 
 Sign up for [BalenaCloud](https://www.balena.io/cloud/) (it's free!) and set up an application. Use its wizard to make an image with your network details.
 
@@ -83,7 +83,7 @@ sudo apt-get install vim git zip
 #### Install build tools for node / yarn
 
 ```bash
-sudo apt-get install gcc g++ make cmake libopencv-dev
+sudo apt-get install gcc g++ make cmake python3
 ```
 
 #### Install Node
@@ -148,7 +148,7 @@ yarn
 
 ## OSX setup
 
-This will not run on OSX. You need spidev for pi-spi to work
+This will only work as a PBX server on OSX. You need `/dev/spidev...` for `pi-spi` to work.
 
 ### Balena dev setup
 
