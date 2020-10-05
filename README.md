@@ -174,10 +174,60 @@ To view the output of the main container, you can do
 
 # Usage
 
-## Run the server (the raspberry pi) in development mode (refreshing on change)
+## Run the server in development mode (refreshing on change)
 
 ```bash
 yarn dev
+```
+
+## Run the server with arguments
+
+get a list of command line options with
+
+```bash
+npx babel-node -- src/main.js -h
+```
+
+```txt
+spi
+      --spi-clockSpeed  SPI Clock speed to use for all devices
+                                                     [number] [default: 3000000]
+      --spi-mode        SPI Data mode to use for all devices
+                                                           [number] [default: 0]
+      --spi-channels    SPI Channel information (as JSON)
+    [string] [default: "{"0": {"bus": 0, "device": 0}, "1": {"bus": 0, "device":
+               1}, "2": {"bus": 1, "device": 0}, "3": {"bus": 1, "device": 1}}"]
+
+pbx
+      --pbx-ports     PBX Serial port definitions for js-pixelblaze-expander
+      [string] [default: "{"0": {"name": "/dev/ttyS0", "options": {"channels": {
+   "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 },
+      "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300
+                                                                         }}}}}"]
+      --pbx-channels  PBX channel definitions for js-pixelblaze-expander
+        [string] [default: "{"0": { "port": 0, "channel": 0 }, "1": { "port": 0,
+  "channel": 1 }, "2": { "port": 0, "channel": 2 }, "3": { "port": 0, "channel":
+      3 }, "4": { "port": 0, "channel": 4 }, "5": { "port": 0, "channel": 5 }}"]
+
+Options:
+      --version             Show version number                        [boolean]
+  -d, --devType             Type of device used
+                                        [choices: "PBX", "SPI"] [default: "SPI"]
+  -p, --port                port used to listen for OPC commands
+                                                       [number] [default: 42069]
+  -t, --transportProtocol   OSI Transport Layer protocol with which the server
+                            will listen [choices: "TCP", "UDP"] [default: "UDP"]
+  -m, --middlewareProtocol  Protocol used to translate colours before sending to
+                            device
+  [choices: "colours2sk9822", "colours2ws2811", "colours2ws2812", "colours2rgb"]
+                                                     [default: "colours2sk9822"]
+  -h, --help                Show help                                  [boolean]
+```
+
+so, if you wanted to use a different serial port, devType and middleware, you could do:
+
+```bash
+npx babel-node -- src/main.js -d PBX -m colours2rgb --pbx-ports '{"0": {"name": "/dev/tty.usbserial-AD025M69", "options": {"channels": { "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 }, "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300 }}}}}'
 ```
 
 If everything is working, you should see something like this:
