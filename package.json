@@ -5,8 +5,7 @@
   "main": "src/main.js",
   "preinstall": "npm install --ignore-scripts && babel src --out-dir lib",
   "bin": {
-    "telecortex-server": "lib/main.js",
-    "@js-telecortex-2/js-telecortex-2-server": "lib/main.js"
+    "telecortex-server": "lib/main.js"
   },
   "publishConfig": {
     "access": "public"
