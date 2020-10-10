@@ -1,0 +1,11 @@
+diff --git a/node_modules/pi-spi/index.js b/node_modules/pi-spi/index.js
+index 404770b..cc1193f 100644
+--- a/node_modules/pi-spi/index.js
++++ b/node_modules/pi-spi/index.js
+@@ -1,5 +1,5 @@
+ var fs = require('fs'),
+-    _spi = require("./build/Release/spi_binding");
++    _spi = require("./build/Release/spi_binding.node");
+
+ exports.mode = {
+     CPHA: 0x01,

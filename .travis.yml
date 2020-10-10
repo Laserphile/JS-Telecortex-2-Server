@@ -1,3 +1,4 @@
+# TODO: deprecate this in favour of github actions
 language: node_js
 node_js: '11'
 jobs:

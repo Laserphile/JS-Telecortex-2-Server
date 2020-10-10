@@ -1,5 +1,6 @@
-FROM vanbujm/moonbase-balena:v0.1.0
+FROM balenalib/%%BALENA_ARCH%%-debian-node:10-latest-build
 WORKDIR /usr/src/app
 COPY . .
-RUN sudo ./build-server.sh 1
-CMD ["/bin/bash", "./start.sh"]
+RUN npm clean-install
+RUN npm run build
+CMD ["/usr/local/bin/node", "/usr/src/app/bundle.js"]

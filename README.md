@@ -45,7 +45,7 @@ Or you can download and configure your own image as long as it runs docker. Head
 
 Once the Pi(s) is running you can push an image to it by following the instructions [below](#balena-dev-setup)
 
-### Option 2: Download and run directly on Raspbian
+### Option 2: Download and run directly on Raspbian / Dietpi
 
 With a fresh install of raspbian lite, get your raspberry pi configured with the correct locale using `raspi-config`. Optionally, while you're there you may wish to enable SSH, set the correct WiFi country, change the root password, and set a unique hostname.
 
@@ -80,38 +80,72 @@ sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install vim git zip
 ```
 
-#### Install build tools for node / yarn
+#### Install Node v10 or later
+
+Different versions of Node support different CPU architectures.
+
+- `v10` is LTS until 2020 and supports `arm64`, `armv6l` and `armv7l`
+- `v11` went EOL in 2019 and supports `arm64`, `armv6l` and `armv7l`
+- `v12` and above only supports `arm64` and `armv7l`
+
+This means that the version of node you should install depends on your architecture and whether you need security patches.
+
+##### Option A: Package manager
+
+Some versions of raspbian / dietpi for your pi's architecture will install node v10+ out of the box, some won't. The way to find out is
 
 ```bash
-sudo apt-get install gcc g++ make cmake python3
+apt info nodejs | grep 'Version'
 ```
 
-#### Install Node
+We need this version to be greater than or equal to 10. If it's not, you'll need to use option B or C, depending on your architecture, if it is, you can just install it with
 
-Determine architecture
+```bash
+sudo apt install nodejs -y
+```
+
+**Note:** sometimes, package managers will link the node binary to `nodejs`, not node, you could do something like
+
+```bash
+ln -s /usr/bin/node $(which nodejs)
+```
+
+##### Option B: via nodejs dist
+
+You can determine your CPU architecture with:
 
 ```bash
 uname -m
 ```
 
-_If you have an ARMv7 or later Pi: (Model 2B, 3\*)_
-If you just run `sudo apt-get install nodejs` you will get an old version of node. We want version 11.
+If if your architecture is armv7 or later (RPi Model >2), you want to install `v12` or later
+
+If if your architecture is armv6 (RPi Model 1, Zero), you want to install `v10`.
+
+This script will install the latest node for a particular version.
+
+```bash
+NODE_VERSION='v10' # or whatever
+ARCH=$(uname -m)
+NODE=$(curl https://nodejs.org/dist/index.tab | grep v10 | grep linux-${ARCH} | cut -d $'\t' -f 1 | head -n 1)
+curl "https://nodejs.org/dist/${NODE}/node-${NODE}-linux-${ARCH}.tar.gz" -o "node-${NODE}.tar.gz"
+tar -C /usr/local -zxf "node-${NODE}.tar.gz"
+```
+
+##### Option C: via nodesource package repository (if all else fails)
+
+You may need these build tools.
+
+```bash
+sudo apt-get install gcc g++ make cmake
+```
+
+This will add the nodesource repository to apt
 
 ```bash
 # install node 11
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
-```
-
-_If you have an ARMv6 Pi: (Model A\*, B\*, Zero)_
-node 10 or above is required, but can't be installed through the official repositories as of the time of writing.
-This script will install the latest node 10 (which is LTS until 2020)
-
-```bash
-ARCH=$(uname -m)
-NODE=$(curl https://nodejs.org/dist/index.tab | grep v10 | grep linux-${ARCH} | cut -d $'\t' -f 1 | head -n 1)
-curl "https://nodejs.org/dist/${NODE}/node-${NODE}-linux-${ARCH}.tar.gz" -o "node-${NODE}.tar.gz"
-tar -C /usr/local -zxf "node-${NODE}.tar.gz"
 ```
 
 #### check that Node works with
@@ -121,29 +155,18 @@ node -v
 npm -v
 ```
 
-#### Install yarn
-
-If you just run `sudo apt-get install yarn` you will install [the wrong yarn](http://manpages.ubuntu.com/manpages/xenial/man1/yarn.1.html).
-
-```bash
-curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update && sudo apt-get install yarn
-```
-
 #### Clone this repo
 
 ```bash
-mkdir -p ~/Documents/GitHub
-git clone https://github.com/Laserphile/JS-Telecortex-2-Server ~/Documents/GitHub/JS-Telecortex-2-Server
-cd ~/Documents/GitHub/JS-Telecortex-2-Server
+git clone https://github.com/Laserphile/JS-Telecortex-2-Server
+cd JS-Telecortex-2-Server
 ```
 
-#### Install dependencies
+#### Install and build
 
 ```bash
-npm install nodemon --save
-yarn
+npm install
+npm run build
 ```
 
 ## OSX setup
@@ -174,10 +197,16 @@ To view the output of the main container, you can do
 
 # Usage
 
-## Run the server in development mode (refreshing on change)
+## Run the server with nodemon (refreshing on change)
 
 ```bash
-yarn dev
+npm start:nodemon
+```
+
+## Run the server in dev mode (webpack does not uglify)
+
+```bash
+npm start:dev
 ```
 
 ## Run the server with arguments
@@ -185,7 +214,7 @@ yarn dev
 get a list of command line options with
 
 ```bash
-npx babel-node -- src/main.js -h
+npm start -- -h
 ```
 
 ```txt
@@ -227,7 +256,7 @@ Options:
 so, if you wanted to use a different serial port, devType and middleware, you could do:
 
 ```bash
-npx babel-node -- src/main.js -d PBX -m colours2rgb --pbx-ports '{"0": {"name": "/dev/tty.usbserial-AD025M69", "options": {"channels": { "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 }, "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300 }}}}}'
+npm start -- src/main.js -d PBX -m colours2rgb --pbx-ports '{"0": {"name": "/dev/tty.usbserial-AD025M69", "options": {"channels": { "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 }, "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300 }}}}}'
 ```
 
 If everything is working, you should see something like this:

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint-disable global-require,no-param-reassign */
 import sourceMapSupport from 'source-map-support';
 import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js-telecortex-2-util';
@@ -6,6 +5,7 @@ import yargs from 'yargs';
 import { MIDDLEWARE_OPTIONS } from './opc';
 import { opcTCPServer } from './opc/tcp-server';
 import { opcUDPServer } from './opc/udp-server';
+import "core-js/es/object/from-entries";
 
 sourceMapSupport.install();
 
