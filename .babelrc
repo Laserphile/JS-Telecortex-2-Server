@@ -11,7 +11,4 @@
   "plugins": [
     "transform-class-properties",
   ],
-  "ignore": [
-    "**/*.test.js"
-  ]
 }
