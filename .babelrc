@@ -19,9 +19,6 @@
     ]
   ],
   "ignore": [
-    "**/*.test.js",
-    "**/testSpi.js",
-    "**/setupTests.js",
-    "testing/**"
+    "**/*.test.js"
   ]
 }
