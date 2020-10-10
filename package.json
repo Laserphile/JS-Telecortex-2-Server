@@ -80,7 +80,7 @@
     "expect": "^26.4.2",
     "lodash": "^4.17.11",
     "pi-spi": "^1.0.3",
-    "pixelblaze-expander": "0.0.2",
+    "pixelblaze-expander": "^0.1.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.0.3"
   },
