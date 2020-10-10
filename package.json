@@ -1,6 +1,6 @@
 {
   "name": "@js-telecortex-2/js-telecortex-2-server",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A NodeJS server for controlling APA102/SK9822/WS281X LED strips over OPC",
   "main": "src/main.js",
   "preinstall": "npm install --ignore-scripts && babel src --out-dir lib",
