@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable global-require,no-param-reassign */
 import sourceMapSupport from 'source-map-support';
 import { FRESH_CONTEXT, opcPort, consoleErrorHandler } from '@js-telecortex-2/js-telecortex-2-util';
