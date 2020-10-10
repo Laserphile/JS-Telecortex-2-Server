@@ -85,7 +85,7 @@ const unpackYargsGroup = (options, group, args) => {
   ]);
 };
 
-const parseArgs = () => {
+const parseArgs = args => {
   const spiOptions = {
     clockSpeed: {
       description: 'SPI Clock speed to use for all devices',
@@ -154,7 +154,7 @@ const parseArgs = () => {
     .options(groupYargsOptions(pbxOptions, 'pbx'))
     .help()
     .alias('help', 'h')
-    .parse(process.argv);
+    .parse(args);
   return {
     ...result,
     ...unpackYargsGroup(spiOptions, 'spi', result),
@@ -162,9 +162,9 @@ const parseArgs = () => {
   };
 };
 
-const server = () => {
+export const server = args => {
   // const config = { ...SERVER_CONF, ...parseArgs() };
-  const config = parseArgs();
+  const config = parseArgs(args);
   console.log('config: ', config);
   const { port, devType, middlewareProtocol, transportProtocol } = config;
   // TODO: flick status led
@@ -185,4 +185,4 @@ const server = () => {
   serverFn(context);
 };
 
-server();
+server(process.argv);

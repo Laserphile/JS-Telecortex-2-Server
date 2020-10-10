@@ -7,5 +7,21 @@
       }
     }
     ]
+  ],
+  "plugins": [
+    "transform-class-properties",
+    [
+      "shebang",
+      {
+        "replacement": "#!/usr/bin/env node",
+        "force": true
+      }
+    ]
+  ],
+  "ignore": [
+    "**/*.test.js",
+    "**/testSpi.js",
+    "**/setupTests.js",
+    "testing/**"
   ]
 }
