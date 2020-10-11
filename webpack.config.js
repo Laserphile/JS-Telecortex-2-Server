@@ -15,7 +15,7 @@ const config = {
   entry: path.resolve('src/main.js'),
   target: 'node',
   externals: [nodeExternals({
-    allowlist: ['pixelblaze-expander', 'pi-spi']
+    allowlist: ['pixelblaze-expander']
   })],
   devtool: 'source-map',
   module: {

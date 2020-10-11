@@ -9,17 +9,20 @@ import 'core-js/es/object/from-entries';
 
 sourceMapSupport.install();
 
+const PBX = require('pixelblaze-expander');
+let SPI;
+if (process.platform === 'linux') {
+  SPI = require('pi-spi');
+} else {
+  console.warn('USING FAKE SPI');
+  SPI = require('./testSpi').default;
+}
+
 // const SERVER_CONF = require('./config').default;
 
 const configureSpi = (context, { spiOptions }) => {
   const { clockSpeed, mode, channels } = spiOptions;
-  let SPI;
-  if (process.platform === 'linux') {
-    SPI = require('pi-spi');
-  } else {
-    SPI = require('./testSpi').default;
-    console.warn('USING FAKE SPI');
-  }
+
   Object.entries(channels).forEach(([channelIdx, { bus, device }]) => {
     const spi = SPI.initialize(`/dev/spidev${bus}.${device}`);
     spi.clockSpeed(clockSpeed);
@@ -32,7 +35,6 @@ const configureSpi = (context, { spiOptions }) => {
 
 const configurePbx = (context, { pbxOptions }) => {
   const { ports, channels } = pbxOptions;
-  const PBX = require('pixelblaze-expander');
   context.devices = {};
   Object.entries(ports).forEach(([portIdx, { name, options }]) => {
     context.devices[portIdx] = new PBX.ExpanderDevice(name, options);
