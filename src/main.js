@@ -18,6 +18,7 @@ const configureSpi = (context, { spiOptions }) => {
     SPI = require('pi-spi');
   } else {
     SPI = require('./testSpi').default;
+    console.warn('USING FAKE SPI');
   }
   Object.entries(channels).forEach(([channelIdx, { bus, device }]) => {
     const spi = SPI.initialize(`/dev/spidev${bus}.${device}`);
