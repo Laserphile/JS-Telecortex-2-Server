@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set ex
+set -ex
 
 deploy () {
   eval "$(ssh-agent -s)"
@@ -8,7 +8,7 @@ deploy () {
     mkdir -p ~/.ssh/
     chmod 700 ~/.ssh/
   fi
-  echo -n ${BALENA_CLOUD_KEY} > ~/.ssh/id_rsa_balena
+  echo -e ${BALENA_CLOUD_KEY} > ~/.ssh/id_rsa_balena
   chmod 0600 ~/.ssh/id_rsa_balena
   ssh-add ~/.ssh/id_rsa_balena
   cat >> ~/.ssh/known_hosts <<EOF

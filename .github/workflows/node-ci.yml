@@ -48,12 +48,15 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - name: Install SSH key
+      - name: Install Balena SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.BALENA_CLOUD_PRIVATE_KEY }}
           known_hosts: ${{ secrets.BALENA_KNOWN_HOSTS }}
-      - run: |
+      - name: publish balena image
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "email@example.com"
           git remote add balena ${{ secrets.BALENA_REMOTE  }}
           git fetch --unshallow origin
           git commit -am "build" --allow-empty
