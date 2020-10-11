@@ -5,12 +5,13 @@ jobs:
   include:
     - stage: test
       install:
-        - yarn
+        - npm
       script:
-        - yarn test-ci
-        - yarn coverage
-      cache:
-        yarn: true
+        - npm ci
+        - npm run build
+        - npm run test:ci
+        - npm run coverage
+        - npm run test:build
     - stage: deploy
       language: minimal
       script:
