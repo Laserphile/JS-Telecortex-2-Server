@@ -18,29 +18,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 11.x, 12.x, 14.x]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
       - run: npm run test:ci
       - run: npm run coverage
       - run: npm run build
       - run: npm run test:build
 
   coverage:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -55,7 +39,7 @@ jobs:
       - run: npm run coverage
 
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     env:
       BALENA_CLOUD_KEY: ${{ secrets.BALENA_CLOUD_KEY }}
