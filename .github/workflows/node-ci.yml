@@ -57,7 +57,9 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-
+    env:
+      BALENA_CLOUD_KEY: ${{ secrets.BALENA_CLOUD_KEY }}
+      BALENA_REMOTE: ${{ secrets.BALENA_REMOTE }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -66,6 +68,3 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: scripts/deploy.sh
-
-
-
