@@ -5,7 +5,7 @@ import yargs from 'yargs';
 import { MIDDLEWARE_OPTIONS } from './opc';
 import { opcTCPServer } from './opc/tcp-server';
 import { opcUDPServer } from './opc/udp-server';
-import "core-js/es/object/from-entries";
+import 'core-js/es/object/from-entries';
 
 sourceMapSupport.install();
 

@@ -14,16 +14,23 @@ const config = {
   mode: 'production',
   entry: path.resolve('src/main.js'),
   target: 'node',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    allowlist: ['pixelblaze-expander']
+  })],
+  devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /spi_binding/,
-        loader: 'node-loader'
+        test: /\.js$/,
+        include: [path.resolve('node_modules/pi-spi')],
+        use: {
+          loader: 'node-loader',
+        },
       },
       {
         test: /\.js$/,
         include: [path.resolve('src')],
+        exclude: [path.resolve('node_modules/pi-spi')],
         use: {
           loader: 'babel-loader',
           options: {
