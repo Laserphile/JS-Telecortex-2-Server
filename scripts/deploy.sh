@@ -8,8 +8,10 @@ deploy () {
     mkdir -p ~/.ssh/
     chmod 700 ~/.ssh/
   fi
-  echo -n ${BALENA_CLOUD_KEY} > ~/.ssh/id_rsa_balena
+  echo -n ${BALENA_CLOUD_PRIVATE_KEY} > ~/.ssh/id_rsa_balena
   chmod 0600 ~/.ssh/id_rsa_balena
+  echo -n ${BALENA_CLOUD_PUBLIC_KEY} > ~/.ssh/id_rsa_balena.pub
+  chmod 0644 ~/.ssh/id_rsa_balena.pub
   ssh-add ~/.ssh/id_rsa_balena
   cat >> ~/.ssh/known_hosts <<EOF
 # ssh-keyscan git.balena-cloud.com
