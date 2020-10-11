@@ -41,10 +41,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      BALENA_CLOUD_PUBLIC_KEY: ${{ secrets.BALENA_CLOUD_PUBLIC_KEY }}
-      BALENA_CLOUD_PRIVATE_KEY: ${{ secrets.BALENA_CLOUD_PRIVATE_KEY }}
-      BALENA_REMOTE: ${{ secrets.BALENA_REMOTE }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -52,4 +48,13 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: scripts/deploy.sh
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.BALENA_CLOUD_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.BALENA_KNOWN_HOSTS }}
+      - run: |
+          git remote add balena ${{ secrets.BALENA_REMOTE  }}
+          git fetch --unshallow origin
+          git commit -am "build" --allow-empty
+          git push -f balena master
