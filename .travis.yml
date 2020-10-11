@@ -4,8 +4,6 @@ node_js: '11'
 jobs:
   include:
     - stage: test
-      install:
-        - npm
       script:
         - npm ci
         - npm run build
@@ -15,7 +13,7 @@ jobs:
     - stage: deploy
       language: minimal
       script:
-        - ./deploy.sh
+        - ./scripts/deploy.sh
 stages:
   - test
   - deploy
