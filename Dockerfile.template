@@ -3,4 +3,4 @@ WORKDIR /usr/src/app
 COPY . .
 RUN npm clean-install
 RUN npm run build
-CMD ["/usr/local/bin/node", "/usr/src/app/bundle.js"]
+CMD ["/usr/local/bin/node", "/usr/src/app/dist/bundle.js"]
