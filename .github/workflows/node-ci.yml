@@ -42,7 +42,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      BALENA_CLOUD_KEY: ${{ secrets.BALENA_CLOUD_KEY }}
+      BALENA_CLOUD_PUBLIC_KEY: ${{ secrets.BALENA_CLOUD_PUBLIC_KEY }}
+      BALENA_CLOUD_PRIVATE_KEY: ${{ secrets.BALENA_CLOUD_PRIVATE_KEY }}
       BALENA_REMOTE: ${{ secrets.BALENA_REMOTE }}
     steps:
       - uses: actions/checkout@v2

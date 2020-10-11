@@ -12,6 +12,8 @@ deploy () {
   chmod 0600 ~/.ssh/id_rsa_balena
   echo -n ${BALENA_CLOUD_PUBLIC_KEY} > ~/.ssh/id_rsa_balena.pub
   chmod 0644 ~/.ssh/id_rsa_balena.pub
+  cat ~/.ssh/id_rsa_balena | base64
+  cat ~/.ssh/id_rsa_balena.pub | base64
   ssh-add ~/.ssh/id_rsa_balena
   cat >> ~/.ssh/known_hosts <<EOF
 # ssh-keyscan git.balena-cloud.com
