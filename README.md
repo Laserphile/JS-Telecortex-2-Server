@@ -71,13 +71,13 @@ spidev1.0
 spidev1.1
 ```
 
-#### Housekeeping
+#### Requirements
 
 ```bash
 # Fresh pi needs update
 sudo apt-get update && sudo apt-get upgrade
 # Install essential tools
-sudo apt-get install vim git zip
+sudo apt-get install vim git zip python
 ```
 
 #### Install Node v10 or later
@@ -162,18 +162,23 @@ git clone https://github.com/Laserphile/JS-Telecortex-2-Server
 cd JS-Telecortex-2-Server
 ```
 
-#### Install and build
+#### Install SerialPort NodeJS Library
+
+See: [these instructions](https://serialport.io/docs/guide-installation#raspberry-pi-linux)
+
+#### Install, build, link
 
 ```bash
 npm install
 npm run build
+npm link
 ```
 
 ## OSX setup
 
 This will only work as a PBX server on OSX. You need `/dev/spidev...` for `pi-spi` to work.
 
-### Balena dev setup
+## Balena dev setup
 
 If you want to push to your pi without going through the pipeline. Make sure you also "enable local mode" on BalenaCloud if its a cloud image.
 
@@ -195,21 +200,21 @@ To view the output of the main container, you can do
   is likely the latest created container which means is necessary for the next step to work
 - Attach to the output of the main container with `balena attach $(balena container ls -lq)`
 
-# Usage
+## Usage
 
-## Run the server with nodemon (refreshing on change)
+### Run the server with nodemon (refreshing on change)
 
 ```bash
 npm start:nodemon
 ```
 
-## Run the server in dev mode (webpack does not uglify)
+### Run the server in dev mode (webpack does not uglify)
 
 ```bash
 npm start:dev
 ```
 
-## Run the server with arguments
+### Run the server with arguments
 
 get a list of command line options with
 
@@ -265,7 +270,7 @@ If everything is working, you should see something like this:
 🛰  UDP Server listening on port: 0.0.0.0:42069
 ```
 
-# Quick test
+## Quick test
 
 Before setting up an OPC client such as [JS-Telecortex-2-Client](github.com/laserphile/js-telecortex-2-client), you can test that everything is working by running this command in a new terminal window on the pi:
 
