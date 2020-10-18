@@ -61,16 +61,14 @@ export const handleOPCMessage = (context, msg) => {
  */
 export const handleAllOPCMessages = (context, data) => {
   let bytesRead;
-  while (data.length > 0) {
-    try {
+  try {
+    while (data.length > 0) {
       bytesRead = handleOPCMessage(context, data);
-    } catch (err) {
-      if (err instanceof PartialOPCMsgError) return data;
-      console.error(err);
-      return undefined;
+      data = data.slice(bytesRead);
     }
-    data = data.slice(bytesRead);
-    // console.log(chalk`{cyan 🛰  read: ${bytesRead}, remaining: ${data.length} bytes}`);
+  } catch (err) {
+    if (err instanceof PartialOPCMsgError) return data;
+    console.error(err);
   }
   return undefined;
 };
