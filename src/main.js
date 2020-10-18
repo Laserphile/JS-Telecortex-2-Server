@@ -8,8 +8,8 @@ import { opcUDPServer } from './opc/udp-server';
 import 'core-js/es/object/from-entries';
 
 sourceMapSupport.install();
-
 const PBX = require('pixelblaze-expander');
+
 let SPI;
 if (process.platform === 'linux') {
   SPI = require('pi-spi');
@@ -89,80 +89,82 @@ const unpackYargsGroup = (options, group, args) => {
   ]);
 };
 
+const SPI_OPTIONS = {
+  clockSpeed: {
+    description: 'SPI Clock speed to use for all devices',
+    default: 3e6,
+    type: 'number'
+  },
+  mode: {
+    description: 'SPI Data mode to use for all devices',
+    default: 0,
+    type: 'number'
+  },
+  channels: {
+    description: 'SPI Channel information (as JSON)',
+    type: 'string',
+    json: true,
+    default:
+      '{"0": {"bus": 0, "device": 0}, "1": {"bus": 0, "device": 1}, "2": {"bus": 1, "device": 0}, "3": {"bus": 1, "device": 1}}'
+  }
+};
+
+const PBX_OPTIONS = {
+  ports: {
+    description: 'PBX Serial port definitions for js-pixelblaze-expander',
+    type: 'string',
+    json: true,
+    default:
+      '{"0": {"name": "/dev/ttyS0", "options": {"channels": { "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 }, "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300 }}}}}'
+  },
+  channels: {
+    description: 'PBX channel definitions for js-pixelblaze-expander',
+    type: 'string',
+    json: true,
+    default:
+      '{"0": { "port": 0, "channel": 0 }, "1": { "port": 0, "channel": 1 }, "2": { "port": 0, "channel": 2 }, "3": { "port": 0, "channel": 3 }, "4": { "port": 0, "channel": 4 }, "5": { "port": 0, "channel": 5 }}'
+  }
+};
+
+const YARGS_OPTIONS = {
+  devType: {
+    description: 'Type of device used',
+    alias: 'd',
+    default: 'SPI',
+    choices: Object.keys(DEVTYPE_OPTIONS)
+  },
+  port: {
+    description: 'port used to listen for OPC commands',
+    alias: 'p',
+    default: opcPort,
+    type: 'number'
+  },
+  transportProtocol: {
+    description: 'OSI Transport Layer protocol with which the server will listen',
+    alias: 't',
+    default: 'UDP',
+    choices: Object.keys(TRANSPORT_OPTIONS)
+  },
+  middlewareProtocol: {
+    description: 'Protocol used to translate colours before sending to device',
+    alias: 'm',
+    default: 'colours2sk9822',
+    choices: Object.keys(MIDDLEWARE_OPTIONS)
+  }
+};
+
 const parseArgs = args => {
-  const spiOptions = {
-    clockSpeed: {
-      description: 'SPI Clock speed to use for all devices',
-      default: 3e6,
-      type: 'number'
-    },
-    mode: {
-      description: 'SPI Data mode to use for all devices',
-      default: 0,
-      type: 'number'
-    },
-    channels: {
-      description: 'SPI Channel information (as JSON)',
-      type: 'string',
-      json: true,
-      default:
-        '{"0": {"bus": 0, "device": 0}, "1": {"bus": 0, "device": 1}, "2": {"bus": 1, "device": 0}, "3": {"bus": 1, "device": 1}}'
-    }
-  };
-
-  const pbxOptions = {
-    ports: {
-      description: 'PBX Serial port definitions for js-pixelblaze-expander',
-      type: 'string',
-      json: true,
-      default:
-        '{"0": {"name": "/dev/ttyS0", "options": {"channels": { "0": { "capacity": 300 }, "1": { "capacity": 300 }, "2": { "capacity": 300 }, "3": { "capacity": 300 }, "4": { "capacity": 300 }, "5": { "capacity": 300 }}}}}'
-    },
-    channels: {
-      description: 'PBX channel definitions for js-pixelblaze-expander',
-      type: 'string',
-      json: true,
-      default:
-        '{"0": { "port": 0, "channel": 0 }, "1": { "port": 0, "channel": 1 }, "2": { "port": 0, "channel": 2 }, "3": { "port": 0, "channel": 3 }, "4": { "port": 0, "channel": 4 }, "5": { "port": 0, "channel": 5 }}'
-    }
-  };
-
   const result = yargs
-    .options({
-      devType: {
-        description: 'Type of device used',
-        alias: 'd',
-        default: 'SPI',
-        choices: Object.keys(DEVTYPE_OPTIONS)
-      },
-      port: {
-        description: 'port used to listen for OPC commands',
-        alias: 'p',
-        default: opcPort,
-        type: 'number'
-      },
-      transportProtocol: {
-        description: 'OSI Transport Layer protocol with which the server will listen',
-        alias: 't',
-        default: 'UDP',
-        choices: Object.keys(TRANSPORT_OPTIONS)
-      },
-      middlewareProtocol: {
-        description: 'Protocol used to translate colours before sending to device',
-        alias: 'm',
-        default: 'colours2sk9822',
-        choices: Object.keys(MIDDLEWARE_OPTIONS)
-      }
-    })
-    .options(groupYargsOptions(spiOptions, 'spi'))
-    .options(groupYargsOptions(pbxOptions, 'pbx'))
+    .options(YARGS_OPTIONS)
+    .options(groupYargsOptions(SPI_OPTIONS, 'spi'))
+    .options(groupYargsOptions(PBX_OPTIONS, 'pbx'))
     .help()
     .alias('help', 'h')
     .parse(args);
   return {
     ...result,
-    ...unpackYargsGroup(spiOptions, 'spi', result),
-    ...unpackYargsGroup(pbxOptions, 'pbx', result)
+    ...unpackYargsGroup(SPI_OPTIONS, 'spi', result),
+    ...unpackYargsGroup(PBX_OPTIONS, 'pbx', result)
   };
 };
 
