@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`colours2rgb works 1`] = `
+Array [
+  Array [
+    255,
+    0,
+    0,
+  ],
+]
+`;
