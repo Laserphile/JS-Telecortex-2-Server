@@ -95,7 +95,7 @@
     "expect": "^26.4.2",
     "lodash": "^4.17.11",
     "pi-spi": "^1.2.1",
-    "pixelblaze-expander": "^0.1.0",
+    "pixelblaze-expander": "^0.1.1",
     "source-map-support": "^0.5.19",
     "yargs": "^16.0.3"
   },
