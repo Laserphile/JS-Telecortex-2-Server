@@ -155,6 +155,7 @@ const YARGS_OPTIONS = {
 
 const parseArgs = args => {
   const result = yargs
+    .env('TELECORTEX')
     .options(YARGS_OPTIONS)
     .options(groupYargsOptions(SPI_OPTIONS, 'spi'))
     .options(groupYargsOptions(PBX_OPTIONS, 'pbx'))
