@@ -20,6 +20,7 @@ A rewrite of the [Telecortex](https://github.com/laserphile/telecortex) project 
 
 ## Gifs
 
+![Moonbase Dome](img/telecortex-lx-12.gif)
 ![Timecrime DJing](img/telecortex-timecrime-djing-short.gif?raw=true)
 ![inside dome](img/telecortex-inside-dome.gif?raw=true)
 
