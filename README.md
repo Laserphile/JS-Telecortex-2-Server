@@ -250,6 +250,8 @@ Options:
                                         [choices: "PBX", "SPI"] [default: "SPI"]
   -p, --port                port used to listen for OPC commands
                                                        [number] [default: 42069]
+  -b, --brightness          global brightness value (from 0.0 to 1.0)
+                                                           [number] [default: 1]
   -t, --transportProtocol   OSI Transport Layer protocol with which the server
                             will listen [choices: "TCP", "UDP"] [default: "UDP"]
   -m, --middlewareProtocol  Protocol used to translate colours before sending to

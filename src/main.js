@@ -139,6 +139,12 @@ const YARGS_OPTIONS = {
     default: opcPort,
     type: 'number'
   },
+  brightness: {
+    description: 'global brightness value (from 0.0 to 1.0)',
+    alias: 'b',
+    default: 1.0,
+    type: 'number'
+  },
   transportProtocol: {
     description: 'OSI Transport Layer protocol with which the server will listen',
     alias: 't',
@@ -173,14 +179,15 @@ export const server = args => {
   // const config = { ...SERVER_CONF, ...parseArgs() };
   const config = parseArgs(args);
   console.log('config: ', config);
-  const { port, devType, middlewareProtocol, transportProtocol } = config;
+  const { port, devType, middlewareProtocol, transportProtocol, brightness } = config;
   // TODO: flick status led
 
   const context = {
     ...FRESH_CONTEXT,
     channels: {},
     opcPort: port,
-    middlewareProtocol
+    middlewareProtocol,
+    brightness
   };
 
   const configureFn = DEVTYPE_OPTIONS[devType];
