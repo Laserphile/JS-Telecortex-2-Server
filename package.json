@@ -92,12 +92,12 @@
     "binary": "^0.3.0",
     "chalk": "^2.4.2",
     "core-js": "^3.6.5",
-    "expect": "^26.4.2",
+    "expect": "^27.2.2",
     "lodash": "^4.17.11",
     "pi-spi": "^1.2.1",
     "pixelblaze-expander": "^0.1.1",
     "source-map-support": "^0.5.19",
-    "yargs": "^16.0.3"
+    "yargs": "^17.6.0"
   },
   "jest": {
     "setupFiles": [
