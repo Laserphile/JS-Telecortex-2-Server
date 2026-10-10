@@ -63,7 +63,7 @@ Every setting is a command-line flag or an environment variable, so a balena fle
 | --- | --- | --- | --- |
 | `--port`, `-p` | `TELECORTEX_PORT` | `42069` | UDP port to listen on |
 | `--brightness`, `-b` | `TELECORTEX_BRIGHTNESS` | `1` | SK9822 global brightness, from 0 to 1 |
-| `--spi-clock-speed` | `TELECORTEX_SPI_CLOCK_SPEED` | `3000000` | SPI clock in Hz |
+| `--spi-clock-speed` | `TELECORTEX_SPI_CLOCK_SPEED` | `3000000` | SPI clock in Hz to request. `docker-compose.yml` sets 6 MHz; see Performance. |
 | `--spi-mode` | `TELECORTEX_SPI_MODE` | `0` | SPI mode, from 0 to 3 |
 | `--spi-channels` | `TELECORTEX_SPI_CHANNELS` | the table above | JSON object mapping each OPC channel to a bus and device, e.g. `{"0": {"bus": 0, "device": 0}}` |
 
@@ -75,7 +75,25 @@ Each UDP datagram can hold several OPC messages. For each set-pixel-colours mess
 - **Latency doesn't build up.** While a write is in flight, only the newest frame for that channel waits. Older ones are dropped and counted.
 - **Frames end properly.** After the LEDs, each frame has a zero reset frame and an end frame of at least one clock edge per two LEDs. Without them, SK9822s show each frame only when the next one arrives, which is how the old server behaved. The start frame and LED bytes are unchanged.
 
-A large panel (316 LEDs) is 1,292 bytes per frame, so at the default 3 MHz one frame takes 3.4 ms to send. Two panels share each bus, which allows about 145 fps per panel. Raise `TELECORTEX_SPI_CLOCK_SPEED` for more, if the wiring allows.
+## Performance
+
+The SPI clock is the limit. A 316-LED frame is 1,292 bytes and two panels share each bus, so the most each channel can get is about 48 fps per real MHz for large panels (59 for small ones), a little less after overhead. Channels 2 and 3 run on SPI1, the auxiliary SPI controller, which measured 11 to 17% slower.
+
+**The real clock is lower than requested.** The Pi 3's SPI clock is divided from its core clock. The kernel calculates the divider for 400 MHz, but the core drops to 250 MHz when the CPU is idle, so the real clock is 62 to 98% of the request. An oscilloscope showed about 8 MHz for a 12 MHz request.
+
+`docker-compose.yml` requests 6 MHz, 3.7 to 5.9 MHz real. Chromatik sends about 60 fps, which needs only about 1.3 MHz, so a faster clock mainly cuts latency, at more risk to the signal. A large panel showed clean output at about 8 MHz real.
+
+Measured on a Raspberry Pi 3B+ with four 316-LED channels:
+
+| Requested | Most frames per channel, SPI0 / SPI1 |
+| --- | --- |
+| 3 MHz | 101 / 90 fps |
+| 6 MHz | 197 / 172 fps |
+| 12 MHz | 369 / 305 fps |
+
+At 60 fps on all four channels, every frame is written and the server uses about 3% CPU.
+
+Encoding a packet takes about 1/130 of the old server's CPU time, measured on the same machine and runtime.
 
 While frames arrive, the server logs each channel's received and written frame rates every 10 seconds, plus any dropped frames and write errors.
 

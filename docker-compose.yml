@@ -7,6 +7,10 @@ services:
     restart: always
     # Host networking skips Docker's UDP port forwarding for every OPC packet
     network_mode: host
+    environment:
+      # Chromatik sends about 60 fps, which 6 MHz carries with room to spare. The Pi 3's SPI clock follows its
+      # core clock, so 6 MHz requested is 3.7 to 5.9 MHz real, below the ~8 MHz tested clean on a panel.
+      TELECORTEX_SPI_CLOCK_SPEED: "6000000"
     # Only the SPI devices, instead of a privileged container
     devices:
       - /dev/spidev0.0:/dev/spidev0.0

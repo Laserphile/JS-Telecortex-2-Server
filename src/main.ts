@@ -40,6 +40,15 @@ const socket = await Bun.udpSocket({
 });
 console.log(`Listening for OPC on udp://${socket.hostname}:${socket.port}`);
 
+// In a container this is PID 1, which gets no default signal handling, so without these
+// Docker waits 10 seconds and then kills it on every restart
+for (const signal of ["SIGTERM", "SIGINT"] as const) {
+  process.on(signal, () => {
+    socket.close();
+    process.exit(0);
+  });
+}
+
 // Log frame rates while frames are arriving
 setInterval(() => {
   const seconds = STATS_INTERVAL_MS / 1000;

@@ -3,7 +3,8 @@
  *
  *   bun scripts/test-pattern.ts --host red-mountain.local --channels 0 --fps 60
  *
- * By default a dim rainbow scrolls along each panel. --colour 255,0,0 sends solid red instead, which checks the
+ * By default a dim rainbow scrolls along each panel. --colour 255,0,0 sends solid red instead, and
+ * --colour 255,0,0/0,255,0/0,0,255 cycles red, green and blue, holding each for --hold seconds, which checks the
  * colour order. The server logs the frame rates it receives and writes, so a high --fps shows what SPI keeps up with.
  */
 import { lookup } from "node:dns/promises";
@@ -21,6 +22,7 @@ const { values } = parseArgs({
     // The brightest any colour gets. Full white on 316 LEDs draws far more current than a small supply gives.
     level: { type: "string", default: "64" },
     colour: { type: "string" },
+    hold: { type: "string", default: "3" },
   },
 });
 
@@ -30,7 +32,10 @@ const leds = Number(values.leds);
 const fps = Number(values.fps);
 const level = Number(values.level);
 const totalFrames = Math.round(fps * Number(values.seconds));
-const solid = values.colour?.split(",").map((value) => Math.min(Number(value), level));
+const colours = values.colour
+  ?.split("/")
+  .map((colour) => colour.split(",").map((value) => Math.min(Number(value), level)));
+const holdFrames = Math.max(1, Math.round(fps * Number(values.hold)));
 const { address } = await lookup(values.host, { family: 4 });
 
 const rainbow = (position: number): number[] => {
@@ -50,6 +55,7 @@ console.log(`Sending ${totalFrames} frames to ${address}:${port}, channels ${cha
 let frame = 0;
 const start = performance.now();
 const timer = setInterval(() => {
+  const solid = colours?.[Math.floor(frame / holdFrames) % colours.length];
   for (let led = 0; led < leds; led++) {
     message.set(solid ?? rainbow((led + frame) / leds), OPC_HEADER_LENGTH + led * 3);
   }
