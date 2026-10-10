@@ -1,0 +1,15 @@
+# balena builds and runs this, and it holds every container setting the server needs.
+# The SPI boot settings can't be set from a container; they are fleet configuration, listed in README.md.
+version: "2.1"
+services:
+  main:
+    build: .
+    restart: always
+    # Host networking skips Docker's UDP port forwarding for every OPC packet
+    network_mode: host
+    # Only the SPI devices, instead of a privileged container
+    devices:
+      - /dev/spidev0.0:/dev/spidev0.0
+      - /dev/spidev0.1:/dev/spidev0.1
+      - /dev/spidev1.0:/dev/spidev1.0
+      - /dev/spidev1.1:/dev/spidev1.1
