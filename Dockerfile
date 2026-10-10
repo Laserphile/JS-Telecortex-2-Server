@@ -4,7 +4,7 @@ FROM oven/bun:1.4.2-slim@sha256:cb3bbbb08e13a4a2ff400f24c7a2a1d5efa83f6ef8544d52
 
 WORKDIR /app
 # The server has no runtime dependencies, so there is nothing to install
-COPY package.json tsconfig.json ./
+COPY package.json ./
 COPY src ./src
 
 CMD ["bun", "src/main.ts"]
