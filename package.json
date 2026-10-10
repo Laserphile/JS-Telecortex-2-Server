@@ -1,33 +1,14 @@
 {
   "name": "@js-telecortex-2/js-telecortex-2-server",
-  "version": "0.2.2",
-  "description": "A NodeJS server for controlling APA102/SK9822/WS281X LED strips over OPC",
-  "main": "src/main.js",
-  "bin": {
-    "telecortex-server": "dist/bundle.js"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "version": "1.0.0",
+  "description": "Open Pixel Control over UDP to SK9822/APA102 LEDs on Raspberry Pi SPI, running on Bun",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "lint": "eslint src --config .eslintrc",
-    "lint:fix": "eslint src --config .eslintrc --fix",
-    "pretty": "prettier **/*.js --config .prettierrc --write",
-    "pretest": "npm run lint",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch --coverage",
-    "test:ci": "jest --ci --coverage",
-    "test:build": "npm start -- -h",
-    "coverage": "codecov",
-    "build": "webpack --config webpack.config.js",
-    "build:dev": "NODE_ENV=development npm run build",
-    "build:prod": "NODE_ENV=production npm run build",
-    "postinstall": "patch-package",
-    "prestart": "npm run build",
-    "prestart:dev": "npm run build:dev",
-    "start": "node --harmony dist/bundle.js",
-    "start:dev": "node --harmony dist/bundle.js",
-    "start:nodemon": "nodemon --exec npm run start:dev"
+    "start": "bun src/main.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "test-pattern": "bun scripts/test-pattern.ts"
   },
   "repository": {
     "type": "git",
@@ -35,76 +16,16 @@
   },
   "author": "moonbase-labs",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Laserphile/JS-Telecortex-2-Server/issues"
-  },
-  "homepage": "https://github.com/Laserphile/JS-Telecortex-2-Server#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/node": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "codecov": "^3.7.2",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-you-dont-need-lodash-underscore": "^6.5.0",
-    "husky": "^2.3.0",
-    "jest": "^24.8.0",
-    "lint-staged": "^8.1.7",
-    "node-loader": "^0.6.0",
-    "nodemon": "^1.19.1",
-    "patch-package": "^6.2.2",
-    "prettier": "^1.17.1",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.2",
-    "webpack-node-externals": "^2.5.2"
-  },
   "keywords": [
     "open pixel control",
     "opc",
     "raspberry pi",
     "apa102",
     "sk9822",
-    "ws2811",
-    "ws2812",
-    "ws281x",
-    "neopixel",
-    "dotstar"
+    "bun"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "dependencies": {
-    "@js-telecortex-2/js-telecortex-2-util": "1.1.6",
-    "binary": "^0.3.0",
-    "chalk": "^2.4.2",
-    "core-js": "^3.6.5",
-    "expect": "^26.4.2",
-    "lodash": "^4.17.11",
-    "pi-spi": "^1.2.1",
-    "pixelblaze-expander": "^0.1.1",
-    "source-map-support": "^0.5.19",
-    "yargs": "^16.0.3"
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/src/testing/setupTests.js"
-    ]
-  },
-  "engines": {
-    "node": ">=10.0"
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "7.0.2"
   }
 }
